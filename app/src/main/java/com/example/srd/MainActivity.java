@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.srd.recursos.Usuario;
 
 import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
@@ -33,16 +34,16 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.IntSummaryStatistics;
-
 public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
     EditText editTextNombreUsuario,editTextPassword;
     Button  buttonIngresa;
     String nomUsu;
     String password;
-    String urlLogin = "http://192.168.1.35:8080/MiBlog/api/articulos/1";
+    String urlLogin = "http://192.168.1.35:8080/WS_sistemaRecolectorDatosV2/api/user?nombre=asd&password=asdasd";
     ProgressDialog progreso;
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,24 +55,14 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         buttonIngresa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               boolean estado =  validaLogin();
-                if(estado){
-                    Intent intent = new Intent(getApplicationContext(),listaPisosActivity.class);
-                    startActivity(intent);
-                }
-
-
-               //validaLogin();
+                 validaLogin();
             }
         });
 
     }
     private boolean validaLogin() {
 
-        /*urlLogin.replace(" ","%20");
-
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,urlLogin,null,this,this);
-        request.add(jsonObjectRequest);
+        /*
         */
 
 
@@ -82,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             Toast.makeText(getApplicationContext(),"NO SE PERMITEN CAMPOS VACIOS", Toast.LENGTH_LONG).show();
             estado = false;
         }else {
-            estado = true;
+            urlLogin.replace(" ","%20");
+
+            jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,urlLogin,null,this,this);
+            request.add(jsonObjectRequest);
         }
         return estado;
     }
@@ -95,6 +89,17 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(JSONObject response) {
-        Toast.makeText(getApplicationContext(),"Todo correcto "+ response.toString(),Toast.LENGTH_SHORT).show();
+        Usuario usuario = new Usuario();
+        JSONObject rptaUser = response;
+
+        usuario.setNombreUser(rptaUser.optString("nombreUser"));
+        usuario.setIdUser( Integer.parseInt( rptaUser.optString("iduser")));
+        if(usuario.getNombreUser().equals("none")){
+            Toast.makeText(getApplicationContext(),"No se pudo iniciar sesion " ,Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext()," BIENVENIDO : "+ usuario.getNombreUser() ,Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(),listaPisosActivity.class);
+            startActivity(intent);
+        }
     }
 }
