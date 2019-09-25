@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/itemlstaPisosNoAprobados"
+        android:title="Lista pisos desaprobados"
+        />
+    <item
+        android:id="@+id/itemDiccionario"
+        android:title="Diccionario"
+        />
+    <item android:id="@+id/itemLuxometro"
+        android:title="Selecionar Luxometro"/>
+    <item
+        android:id="@+id/itemLstaPisos"
+        android:title="Lista de pisos"/>
+    <item android:id="@+id/itemCerrarSesion"
+        android:title="Cerrar sesion"/>
 </menu>

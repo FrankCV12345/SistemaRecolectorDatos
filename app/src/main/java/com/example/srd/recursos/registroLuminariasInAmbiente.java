@@ -1,7 +1,9 @@
-package com.example.srd;
+package com.example.srd.recursos;
 
-public class registroLuminariasInAmbiente {
-    private int idLum , cantidad;
+import java.io.Serializable;
+
+public class registroLuminariasInAmbiente implements Serializable {
+    private int idLum , cantidad,idRegistroLum,idregistroAnbien;
     private boolean estado;
 
     public registroLuminariasInAmbiente(int idLum, int cantidad, boolean estado) {
@@ -9,6 +11,23 @@ public class registroLuminariasInAmbiente {
         this.cantidad = cantidad;
         this.estado = estado;
     }
+
+    public int getIdRegistroLum() {
+        return idRegistroLum;
+    }
+
+    public void setIdRegistroLum(int idRegistroLum) {
+        this.idRegistroLum = idRegistroLum;
+    }
+
+    public int getIdregistroAnbien() {
+        return idregistroAnbien;
+    }
+
+    public void setIdregistroAnbien(int idregistroAnbien) {
+        this.idregistroAnbien = idregistroAnbien;
+    }
+
     public int getIdLum() {
         return idLum;
     }

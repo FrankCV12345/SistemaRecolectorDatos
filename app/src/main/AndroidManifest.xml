@@ -8,10 +8,16 @@
         android:allowBackup="true"
         android:icon="@mipmap/engineer"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/engineer"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ActualizaRegistroAmbiente"></activity>
+        <activity android:name=".dicionario" />
+        <activity android:name=".luxometros" />
+        <activity android:name=".lstaPisosDesarpobados" />
+        <activity android:name=".RegistroDatosAmbiente" />
+        <activity android:name=".listaAmbientes" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".listaPisosActivity" />
         <activity android:name=".InstagramActivty">
             <intent-filter>

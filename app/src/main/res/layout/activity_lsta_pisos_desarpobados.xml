@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".lstaPisosDesarpobados">
-
-</android.support.constraint.ConstraintLayout>
+    <include
+        android:id="@+id/toolbarSRD"
+        android:layout_alignParentTop="true"
+        layout="@layout/toolbar"
+        />
+    <TextView
+        android:layout_below="@+id/toolbarSRD"
+        android:id="@+id/tituloidPisosDesaproabdos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LISTA PISOS DESARPOBADOS"
+        android:layout_centerHorizontal="true"
+        android:textSize="24dp"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        />
+    <ListView
+        android:id="@+id/listViewPisosDesaprobados"
+        android:layout_below="@+id/tituloidPisosDesaproabdos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        ></ListView>
+    <ProgressBar
+        android:id="@+id/progressCircular"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/oscuro"
+        android:elevation="5dp"
+        />
+</RelativeLayout>

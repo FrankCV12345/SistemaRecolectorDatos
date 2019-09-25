@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".listaAmbientes">
+    <include
+        android:id="@+id/toolbarSRD"
+        layout="@layout/toolbar"
+        android:layout_alignParentTop="true"
+        />
+    <TextView
+         android:id="@+id/textViewTituloAmbientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarSRD"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Lista Ambientes"
+        android:textSize="24dp"
+        android:textColor="#000"
+        />
+    <ListView
+        android:id="@+id/listaViewAmbientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTituloAmbientes"
+        android:layout_margin="10dp"
+        android:background="#090909"
+        ></ListView>
 
-</android.support.constraint.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progressCircular"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/oscuro"
+        android:elevation="5dp"
+        />
+</RelativeLayout>

@@ -1,8 +1,6 @@
 package com.example.srd.recursos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class piso implements Serializable {
     private Integer idPiso;

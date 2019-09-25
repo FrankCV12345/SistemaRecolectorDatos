@@ -34,44 +34,64 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.IntSummaryStatistics;
+
+import static com.example.srd.recursos.recursos.CONTEXTLOGIN;
+import static com.example.srd.recursos.recursos.getDefaults;
+import static com.example.srd.recursos.recursos.getIPSERVICIO;
+import static com.example.srd.recursos.recursos.getRecursoUser;
+import static com.example.srd.recursos.recursos.setDefaults;
+
 public class MainActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
     EditText editTextNombreUsuario,editTextPassword;
-    Button  buttonIngresa;
+    Button  buttonIngresa,buttonLimipia;
     String nomUsu;
     String password;
-    String url = "http://192.168.1.35:8080/WS_sistemaRecolectorDatosV2/api/";
+    /*String url = "http://192.168.1.36:8080/WS_sistemaRecolectorDatosV2/api/";
     String recurso = "user";
-    ProgressDialog progreso;
+    ProgressDialog progreso;*/
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        editTextNombreUsuario = findViewById(R.id.EditTextNomUsu);
-        editTextPassword = findViewById(R.id.editTextPasword);
-        buttonIngresa = findViewById(R.id.buttonIngresar);
-        request = Volley.newRequestQueue(getApplicationContext());
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+
+            CONTEXTLOGIN = this;
+            if (getDefaults("idUser",CONTEXTLOGIN) != null){
+                startActivity(new Intent(getApplicationContext(),luxometros.class));
+            }
+
+            editTextNombreUsuario = findViewById(R.id.EditTextNomUsu);
+            editTextPassword = findViewById(R.id.editTextPasword);
+            buttonIngresa = findViewById(R.id.buttonIngresar);
+            buttonLimipia = findViewById(R.id.buttonLimpiar);
+            request = Volley.newRequestQueue(getApplicationContext());
         buttonIngresa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                  validaLogin();
             }
         });
+        buttonLimipia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextNombreUsuario.setText("");
+                editTextPassword.setText("");
+            }
+        });
 
     }
     private boolean validaLogin() {
-         nomUsu = editTextNombreUsuario.getText().toString();
-         password = editTextPassword.getText().toString();
+        nomUsu = editTextNombreUsuario.getText().toString();
+        password = editTextPassword.getText().toString();
         boolean estado = false ;
         if(nomUsu.equals("") || password.equals("") ){
-            Toast.makeText(getApplicationContext(),"NO SE PERMITEN CAMPOS VACIOS", Toast.LENGTH_LONG).show();
-            estado = false;
+            Toast.makeText(getApplicationContext(),"FALTA INGREDAR DATOS",Toast.LENGTH_SHORT).show();
+            //estado = false;
         }else {
-           String urlLogin = url+recurso+"?nombre="+nomUsu+"&password="+password;
-            urlLogin.replace(" ","%20");
-
+            String urlLogin = getIPSERVICIO()+getRecursoUser()+"?nombre="+nomUsu+"&password="+password;
+            urlLogin = urlLogin.replace(" ","%20");
             jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,urlLogin,null,this,this);
             request.add(jsonObjectRequest);
         }
@@ -88,14 +108,15 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     public void onResponse(JSONObject response) {
         Usuario usuario = new Usuario();
         JSONObject rptaUser = response;
-
         usuario.setNombreUser(rptaUser.optString("nombreUser"));
         usuario.setIdUser( Integer.parseInt( rptaUser.optString("iduser")));
         if(usuario.getNombreUser().equals("none")){
             Toast.makeText(getApplicationContext(),"No se pudo iniciar sesion " ,Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(getApplicationContext()," BIENVENIDO : "+ usuario.getNombreUser() ,Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(),listaPisosActivity.class);
+            setDefaults("nombreUser",nomUsu,getApplicationContext());
+            setDefaults("idUser",""+usuario.getIdUser(),getApplicationContext());
+            Intent intent = new Intent(getApplicationContext(),luxometros.class);
             startActivity(intent);
         }
     }
